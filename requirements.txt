@@ -1,0 +1,15 @@
+anytree
+numpy
+pandas
+sklearn
+torch
+tqdm
+PyYAML
+line_profiler
+tensorboardX
+torchsummaryX
+seaborn
+torchcontrib
+scikit-learn
+redis
+openpyxl

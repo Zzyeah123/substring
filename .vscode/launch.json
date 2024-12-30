@@ -1,0 +1,39 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Python Debugger: Current File",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "cwd": "${workspaceFolder}",
+            "args": [
+                "--model", "DREAM",
+                "--dname", "DBLP",
+                "--p-train", "1.0",
+                "--p-val", "0.1",
+                "--p-test", "0.1",
+                "--seed", "666",
+                "--l2", "0.00000001",
+                "--lr", "0.001",
+                "--layer", "1",
+                "--pred-layer", "3",
+                "--cs", "512",
+                "--max-epoch", "100",
+                "--patience", "5",
+                "--max-d", "3",
+                "--max-char", "200",
+                "--bs", "32",
+                "--h-dim", "512",
+                "--es", "100",
+                "--clip-gr", "10.0"
+            ]
+            
+        }
+    ]
+}
+

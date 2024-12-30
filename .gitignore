@@ -1,0 +1,15 @@
+__pycache__/
+**/main
+**/main_info
+**/log.*
+**/result.*
+**/stat/
+**/time/
+**/model/
+**/exp_result/
+**/log/
+**/datasets/
+obj/
+time/
+res/
+pkl/
