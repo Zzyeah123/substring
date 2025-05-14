@@ -152,7 +152,7 @@ def learn_Deep_Learning_model_rewrite(model_name, dname, exp_name, logger=None):
             logger.report_table("MOF info", "PD with index", 0, table_plot=df)
 
 
-def learn_Deep_Learning_model(cm, est_class: Type[Estimator], data, is_rewirte=False, logger=None, exp_key=None, overwrite=None, n_qry=None, n_prfx=None, n_update=None, analysis=None, analysis_latency=None):
+def learn_Deep_Learning_model(cm, est_class: Type[Estimator], data, is_rewirte=False, logger=None, exp_key=None, overwrite=None, n_qry=None, n_prfx=None, n_update=None, analysis=None, analysis_latency=None,num_substrings=None,loss_coefficient=None):
     """
 
     Args:
@@ -231,7 +231,7 @@ def learn_Deep_Learning_model(cm, est_class: Type[Estimator], data, is_rewirte=F
         est.logdir = log_dir
         if analysis:
             assert os.path.exists(est.save_path), f"analysis mode: {est.save_path} does not exists"
-        est.build(train_data, valid_data, test_data, over_write=overwrite)
+        est.build(loss_coefficient,num_substrings,train_data, valid_data, test_data, over_write=overwrite)
         if hasattr(est, "best_epoch"):
             additional_info["best_epoch"] = est.best_epoch
         if hasattr(est, "last_epoch"):

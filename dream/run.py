@@ -42,6 +42,14 @@ def get_config_manager_and_exp_name(args):
 
     if model_name == 'DREAM':
         assert args.cs, "In DREAM training, cell size should be given"
+        cm["alg"]["substrings_num"]=args.substrings_num
+        exp_suffix += f"_substrNum_{args.substrings_num}"
+        cm["alg"]["complex_rate"]=args.complex_rate
+        exp_suffix += f"_complexRate_{args.complex_rate}"
+        cm["alg"]["flag"]=args.flag
+        exp_suffix += f"_flag_{args.flag}"
+        cm["alg"]["loss_coefficient"]=args.loss_coefficient
+        exp_suffix += f"_lossCoff_{args.loss_coefficient}"
         cm["alg"]["cs"] = args.cs
         exp_suffix += f"_cs_{args.cs}"
 
@@ -211,4 +219,4 @@ if __name__ == "__main__":
     # start training
     
     est = learn_Deep_Learning_model(cm, Est_class, data, is_rewirte=args.rewrite, logger=logger, exp_key=exp_key,
-                                    overwrite=args.overwrite, n_qry=n_qry, n_prfx=n_prfx, n_update=n_update, analysis=args.analysis)
+                                    overwrite=args.overwrite, n_qry=n_qry, n_prfx=n_prfx, n_update=n_update, analysis=args.analysis,num_substrings=args.substrings_num,loss_coefficient=args.loss_coefficient)

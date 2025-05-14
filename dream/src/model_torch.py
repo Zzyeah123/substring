@@ -104,7 +104,7 @@ class DREAMEstimator(Estimator):
         self.clip_gr = conf.clip_gr
         self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-    def build(self, train_data, valid_data=None, test_data=None, over_write=False):
+    def build(self,loss_coefficient,num_substrings, train_data, valid_data=None, test_data=None, over_write=False):
         dfact = self.db_factory
         db = dfact.get_db()
         self.char_dict = ut.char_dict_from_db(db, max_char=self.conf.max_char)
@@ -146,7 +146,7 @@ class DREAMEstimator(Estimator):
                 self.model.to(self.device)
         else:
             # self.train(train_data, valid_data, test_data)
-            self.train(train_data, valid_data)
+            self.train(train_data,loss_coefficient, num_substrings,valid_data)
 
     def model_size(self, *args):
         size = os.path.getsize(self.save_path)
@@ -154,7 +154,7 @@ class DREAMEstimator(Estimator):
     
 
     #  生成子串
-    def generate_substrings(self,query, num_substrings=3):
+    def generate_substrings(self,query, num_substrings):
         substrings = []
         query_len = len(query)        
         cnt = 0
@@ -206,7 +206,7 @@ class DREAMEstimator(Estimator):
 
             return (x_train, qd_list), y_train
         
-    def _encode_data(self, raw_data):
+    def _encode_data(self, raw_data,num_substrings):
         if self.seq_out:
             if len(raw_data[0][1]) > 1 and isinstance(raw_data[0][1][1], list):  # train mode
                 qs_list, y_train = list(zip(*[(x[0], x[1]) for x in raw_data]))
@@ -234,7 +234,7 @@ class DREAMEstimator(Estimator):
                 for rs in raw_data_bak:
                     strings = []
                     strings.append(rs[0])
-                    substrings = self.generate_substrings(str(rs[0]))
+                    substrings = self.generate_substrings(str(rs[0]),num_substrings)
                     strings = strings+substrings
                     for d,c in enumerate(rs[1]):
                         raw_data.append([strings,d,c])
@@ -320,7 +320,7 @@ class DREAMEstimator(Estimator):
             q_err = ut.q_error(y, y_hat)
         return q_err
 
-    def train(self, train_data, valid_data=None, test_data=None):
+    def train(self, train_data,loss_coefficient, num_substrings,valid_data=None, test_data=None):
         model = self.model
         model.to(self.device)
         model.train()
@@ -333,7 +333,7 @@ class DREAMEstimator(Estimator):
         assert logdir is not None, "log_path should be assigned"
         curr_best_path = os.path.dirname(save_path) + "/_curr_best.pt"
 
-        x_train, y_train = self._encode_data(train_data)
+        x_train, y_train = self._encode_data(train_data,num_substrings=num_substrings)
         # data_train = self._encode_data(train_data)
         if valid_data:
             # data_valid = self._encode_data(valid_data)
@@ -396,7 +396,7 @@ class DREAMEstimator(Estimator):
                 # print(x_batch, y_batch)
                 # print(f"============ end epoch : {epoch} {global_step} =============")
 
-                loss_batch = model.loss(x_batch, y_batch)
+                loss_batch = model.loss(x_batch, y_batch,loss_coefficient)
                 loss_batch.backward()
                 if self.clip_gr > 0:
                     torch.nn.utils.clip_grad_value_(self.model.parameters(), self.clip_gr)
@@ -452,7 +452,7 @@ class DREAMEstimator(Estimator):
 
             pred_valid, y_valid = self.estimate(dl_valid)  # for valid
             q_error_valid = self.q_error(y_valid, pred_valid)
-            loss_valid = self._average_loss(dl_valid)
+            loss_valid = self._average_loss(dl_valid,num_substrings)
 
             if test_data:
                 pred_test, y_test = self.estimate(dl_test)  # for test
@@ -496,12 +496,12 @@ class DREAMEstimator(Estimator):
         self.model.load_state_dict(torch.load(save_path, map_location=self.device))
         torch.save(self.model.state_dict(), save_path)
 
-    def _average_loss(self, data_or_loader):
+    def _average_loss(self, data_or_loader,num_substrings):
         model = self.model
         if isinstance(data_or_loader, DataLoader):
             dl_data = data_or_loader  # data_loader
         else:
-            x_data, y_data = self._encode_data(data_or_loader)  # data
+            x_data, y_data = self._encode_data(data_or_loader,num_substrings=num_substrings )  # data
             dl_data = self.dataloader(x_data, y_data, shuffle=False)
 
         loss = 0
@@ -534,7 +534,7 @@ class DREAMEstimator(Estimator):
         if isinstance(data_or_loader, DataLoader):
             dl_data = data_or_loader  # data_loader
         else:
-            x_data, y_data = self._encode_data(data_or_loader)  # data
+            x_data, y_data = self._encode_data_test(data_or_loader)  # data
             dl_data = self.dataloader(x_data, y_data, shuffle=False)
         y_pred = []
         y_data = []
@@ -870,7 +870,7 @@ class RNN_module(nn.Module):
         return loss
 
 
-    def loss(self, x, y):
+    def loss(self, x, y,loss_coefficient):
         # assert isinstance(y, torch.Tensor)
         # prfx_train = (self.prfx is True) and y[0].dim() > 0
         seq_train = (self.seq_out is True) and y[0].dim() > 0
@@ -892,7 +892,7 @@ class RNN_module(nn.Module):
                 loss = loss.sum() / torch.gt(y, 0).sum()
         else:
             loss1 = mean_squared_logarithmic_loss(pred_y, y)
-            loss = loss1+loss2
+            loss = loss1+loss2*loss_coefficient
         return loss
 
 
@@ -1265,7 +1265,7 @@ class CardNetEstimator(Estimator):
     # def _featurizer(self, input_string, sigma, tau_max, l_max):
     #     return encode_string_by_CardNet(input_string, sigma, tau_max, l_max)
 
-    def build(self, train_data, valid_data=None, test_data=None, over_write=False):
+    def build(self, num_aubatrings,train_data, valid_data=None, test_data=None, over_write=False):
         db = self.db_factory.get_db()
         self.sigma = ut.char_dict_from_db(db, self.max_char)
         # self.l_max = max([len(x) for x in db])

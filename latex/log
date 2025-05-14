@@ -1,0 +1,270 @@
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001127484254539,
+lower quartile=0.21531125,
+median=0.76710373,
+upper quartile=3.63579667,
+upper whisker=5864.71435546875,
+draw position=0.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(0.9,0.04111641)
+(0.9,24.55761871)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.00549170687209,
+lower quartile=0.23457359,
+median=0.75516504,
+upper quartile=3.3174734,
+upper whisker=5864.7144633311245,
+draw position=2.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(2.7,0.04590902)
+(2.7,31.38537606)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001127484311434,
+lower quartile=0.1776849,
+median=0.78568745,
+upper quartile=3.84463789,
+upper whisker=100.38711349945544,
+draw position=4.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(4.5,0.03336977)
+(4.5,17.82199707)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.002083766739815,
+lower quartile=0.30808191,
+median=1.1779089,
+upper quartile=5.74527788,
+upper whisker=7072.669921875,
+draw position=6.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(6.9,0.07025955)
+(6.9,41.39709244)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.012317031118043,
+lower quartile=0.29765161,
+median=1.02297786,
+upper quartile=4.46280386,
+upper whisker=7072.66987192062,
+draw position=8.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(8.7,0.07302506)
+(8.7,51.03881306)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.002083766788734,
+lower quartile=0.36012895,
+median=1.54348991,
+upper quartile=7.6848303,
+upper whisker=195.56211419254842,
+draw position=10.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(10.5,0.06784227)
+(10.5,37.44980863)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001334131113254,
+lower quartile=0.25381434,
+median=0.90420711,
+upper quartile=4.24472284,
+upper whisker=7368.0,
+draw position=12.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(12.9,0.04798682)
+(12.9,28.67380867)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.007521062925627,
+lower quartile=0.28343398,
+median=0.87516486,
+upper quartile=3.91829573,
+upper whisker=7367.999981808282,
+draw position=14.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(14.7,0.05530583)
+(14.7,37.12778447)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001334131100498,
+lower quartile=0.20512144,
+median=0.9609033,
+upper quartile=4.3942684,
+upper whisker=100.55567542883907,
+draw position=16.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(16.5,0.03918078)
+(16.5,21.6237383)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001552121364512,
+lower quartile=0.24389751,
+median=0.89480156,
+upper quartile=4.14761496,
+upper whisker=5176.32080078125,
+draw position=1.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(1.5,0.05173453)
+(1.5,33.6829567)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.00936220178753,
+lower quartile=0.25430513,
+median=0.85721219,
+upper quartile=3.69407678,
+upper whisker=5176.320868643968,
+draw position=3.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(3.3,0.0627247)
+(3.3,39.89018597)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001552121306202,
+lower quartile=0.23867485,
+median=1.01754188,
+upper quartile=4.72263778,
+upper whisker=167.98038521499652,
+draw position=5.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(5.1,0.04146623)
+(5.1,24.09870324)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.00602227402851,
+lower quartile=0.35101151,
+median=1.18986368,
+upper quartile=5.02372456,
+upper whisker=8665.859375,
+draw position=7.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(7.5,0.08085153)
+(7.5,37.95734253)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.01495212010996,
+lower quartile=0.3474677,
+median=1.00450583,
+upper quartile=4.25771478,
+upper whisker=8665.859714867278,
+draw position=9.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(9.3,0.08835104)
+(9.3,42.8239952)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.006022274218,
+lower quartile=0.35850065,
+median=1.52349451,
+upper quartile=6.32594093,
+upper whisker=184.215594876817,
+draw position=11.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(11.1,0.07530654)
+(11.1,32.53486873)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001347999321297,
+lower quartile=0.24491538,
+median=0.8676526,
+upper quartile=4.06139469,
+upper whisker=6527.39111328125,
+draw position=13.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(13.5,0.04652956)
+(13.5,29.06792717)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.007364773698086,
+lower quartile=0.25849072,
+median=0.8235057,
+upper quartile=3.75835891,
+upper whisker=6527.3912532134245,
+draw position=15.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(15.3,0.05491539)
+(15.3,35.42139074)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001347999277439,
+lower quartile=0.2103101,
+median=0.90712798,
+upper quartile=4.53443405,
+upper whisker=114.00361879544378,
+draw position=17.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(17.1,0.04199838)
+(17.1,22.23556668)
+};

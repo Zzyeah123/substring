@@ -1338,6 +1338,10 @@ def get_parser_with_ignores():
     parser = argparse.ArgumentParser(description="parse")
     parser.add_argument('--model', type=str, help='model name')
     parser.add_argument('--dname', type=str, help='data name')
+    parser.add_argument('--substrings-num', type=int, default=3, help='Number of substrings to generate')
+    parser.add_argument('--loss-coefficient',type=float)
+    parser.add_argument('--complex-rate',type=float,help='rate of complex strings')
+    parser.add_argument('--flag',type=int,help='the flag of orderembedding')#0 means no
     parser.add_argument('--p-train', type=float, help='ratio of augmented training data')
     parser.add_argument('--p-val', type=float, help='ratio of valid')
     parser.add_argument('--p-test', type=float, help='ratio of test')
@@ -1561,12 +1565,16 @@ def get_splited_train_valid_test_each_len(query_strings, split_seed, args):
     p_train = args.p_train
     p_valid = args.p_val
     p_test = args.p_test
+    complex_rate = args.complex_rate
     # seed = args.seed
     seed = split_seed
 
     query_len = [len(x) for x in query_strings]
-
-    q_train, q_test = train_test_split(query_strings, test_size=p_test, random_state=seed, stratify=query_len)
+    if p_train==1:
+        q_train, q_test = train_test_split(query_strings, test_size=p_test, random_state=seed, stratify=query_len)
+    else:
+        q_train, _ = train_test_split(query_strings, train_size=p_train, random_state=seed, stratify=query_len)
+        q_train, q_test = train_test_split(query_strings, test_size=p_test, random_state=seed, stratify=query_len)
     if p_valid is None:  # use all train data as valid data
         assert args.model == 'LBS'
         return None, q_train, q_test
@@ -1576,13 +1584,18 @@ def get_splited_train_valid_test_each_len(query_strings, split_seed, args):
     simple_data = []
     complex_data = []
     for x in q_train:
-        if len(x) < int(max(q_train_len)*0.7):
+        if len(x) <= int(max(q_train_len)*0.65):
             simple_data.append(x)
         else: complex_data.append(x)
-    simple_data_sampled, _ = train_test_split(simple_data,train_size=0.5)
-    complex_data_sampled, _ = train_test_split(complex_data,train_size=0.5)
-    q_train = simple_data_sampled+complex_data_sampled
-    #q_train = simple_data
+    if complex_rate==0:
+        q_train = simple_data
+    elif complex_rate==1:
+        q_train=complex_data
+    else:
+        simple_data_sampled, _ = train_test_split(simple_data,train_size=(1-complex_rate))
+        complex_data_sampled, _ = train_test_split(complex_data,train_size=complex_rate)
+        q_train = simple_data_sampled+complex_data_sampled
+    # q_train = simple_data
     q_train_len = [len(x) for x in q_train]
     q_train, q_valid = train_test_split(q_train, test_size=p_valid / (1 - p_test), random_state=seed,
                                         stratify=q_train_len)

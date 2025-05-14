@@ -1,0 +1,557 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\pgfplotsset{grid style={dashed,gray}}
+%\pgfplotsset{compat=1.18}
+\usepgfplotslibrary{statistics}
+\usetikzlibrary{external}
+\tikzset{external/system call={pdflatex \tikzexternalcheckshellescape -halt-on-error
+        -interaction=batchmode -jobname "\image" "\texsource" && %  or ;
+pdftops -eps "\image".pdf}}
+\tikzexternalize
+
+\def\func(#1){2.0^(#1))}
+
+\begin{document}
+
+\begin{tikzpicture}[scale=0.80]
+    
+	\definecolor{lssfre}{HTML}{fccde5}
+	\definecolor{lssemb}{HTML}{bc80bd}
+	\definecolor{lsscon}{HTML}{bebada}
+	\definecolor{wj}{HTML}{fb8072}
+	\definecolor{impr}{HTML}{80b1d3}
+	\definecolor{cs}{HTML}{fdb462}
+	\definecolor{cset}{HTML}{b3de69}
+	\definecolor{jsub}{HTML}{8dd3c7}
+	\definecolor{sumrdf}{HTML}{ffffb3}
+	\definecolor{bsk}{HTML}{d9d9d9}
+	\definecolor{gflow}{HTML}{778899}
+	\definecolor{confidence}{HTML}{9dc6d8}
+	\definecolor{margin}{HTML}{00b3ca}
+	\definecolor{entropy}{HTML}{7dd0b6}
+	\definecolor{consistency}{HTML}{fccde5}
+	\definecolor{alssfre}{HTML}{AFEEEE}
+	\definecolor{alssemb}{HTML}{4682B4}
+	\definecolor{alsscon}{HTML}{B0C4DE}
+  	\definecolor{NNGP}{HTML}{ffffb3}
+	%\definecolor{NNGP}{HTML}{bc80bd}
+	\definecolor{NN}{HTML}{8dd3c7}
+	\definecolor{GBDT}{HTML}{bebada}
+	\definecolor{lsscon}{HTML}{bebada}
+	%\definecolor{alssfre}{HTML}{fccde5}
+	%\definecolor{alssemb}{HTML}{bc80bd}
+	%\definecolor{alsscon}{HTML}{bebada}
+	\pgfdeclareplotmark{nngp95}{
+    \fill [
+        draw=none,
+        left color=black,
+        right color=NNGP,
+        shading angle=45
+    ] (0,0) circle [radius=1.5pt];
+	}
+	
+	\pgfdeclareplotmark{nn95}{
+    \fill [
+        draw=none,
+        left color=black,
+        right color=NN,
+        shading angle=45
+    ] (0,0) circle [radius=1.5pt];
+	}
+	
+  \begin{axis} [
+  		ymajorgrids=true,
+        boxplot/draw direction=y,
+        height=6.0cm, width=9.0cm,
+        ymin=0.000000001, ymax=1000000000, 
+        ytick={0.00000001, 0.0001, 1, 10000, 100000000},
+		yticklabels={$10^{-8}$, $10^{-4}$, $1$, $10^{4}$, $10^{8}$},
+		%ylabel={$\texttt{Underest.} \leftarrow \texttt{q-error} \rightarrow$ \texttt{Overest.}},
+		ylabel={$ \texttt{q-error}$},
+    	ymode=log,
+		xtick={3, 9, 15, 21, 27},
+    	xticklabels={$0:10$, $2:8$ , $5:5$ , $8:2$, $10:0$},
+		legend style={
+		draw=none,
+		at={(0.5, 1.3)},
+		anchor=north,
+		legend columns=6,
+		/tikz/every even column/.append style={column sep=0.5cm}
+		},
+		,extra x ticks={1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29}
+        ,extra x tick style={%
+            ,ticklabel pos=top
+            },
+        ,extra x tick labels={T, S, L, T, S, L, T, S, L, T, S, L, T, S, L},
+    	xmin=0.0,xmax=30,
+		xlabel={Ratio of Simple / Complex},
+		label style={font=\large},
+    	tick label style={font=\large}, 
+    	/pgfplots/boxplot/box extend=0.6
+    ]
+    \draw [dashed] (axis cs:6.0, 0.0000000001) -- (axis cs:6.0,1000000000000);
+    \draw [dashed] (axis cs:12.0, 0.0000000001) -- (axis cs:12.0,1000000000000);
+    \draw [dashed] (axis cs:18.0, 0.0000000001) -- (axis cs:18.0,1000000000000);
+    \draw [dashed] (axis cs:24.0, 0.0000000001) -- (axis cs:24.0,1000000000000);
+    % \draw [dashed] (axis cs:30.0, 0.0000000001) -- (axis cs:30.0,1000000000000);
+	%\draw (axis cs:13.75, 0.0000001) -- (axis cs:13.75,1000000000000);
+	
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001610638573766,
+lower quartile=0.24463557,
+median=0.86207104,
+upper quartile=3.9145745,
+upper whisker=7643.88427734375,
+draw position=0.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(0.9,0.04685382)
+(0.9,26.17410583)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.006713971293247,
+lower quartile=0.2650053,
+median=0.82900083,
+upper quartile=3.79316171,
+upper whisker=7643.884254904747,
+draw position=2.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(2.7,0.05468332)
+(2.7,37.16484793)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001610638553637,
+lower quartile=0.19515032,
+median=0.89836384,
+upper quartile=4.08634858,
+upper whisker=102.4892595142215,
+draw position=4.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(4.5,0.04032344)
+(4.5,19.613261)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001127484254539,
+lower quartile=0.21531125,
+median=0.76710373,
+upper quartile=3.63579667,
+upper whisker=5864.71435546875,
+draw position=6.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(6.9,0.04111641)
+(6.9,24.55761871)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.00549170687209,
+lower quartile=0.23457359,
+median=0.75516504,
+upper quartile=3.3174734,
+upper whisker=5864.7144633311245,
+draw position=8.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(8.7,0.04590902)
+(8.7,31.38537606)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001127484311434,
+lower quartile=0.1776849,
+median=0.78568745,
+upper quartile=3.84463789,
+upper whisker=100.38711349945544,
+draw position=10.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(10.5,0.03336977)
+(10.5,17.82199707)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.002083766739815,
+lower quartile=0.30808191,
+median=1.1779089,
+upper quartile=5.74527788,
+upper whisker=7072.669921875,
+draw position=12.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(12.9,0.07025955)
+(12.9,41.39709244)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.012317031118043,
+lower quartile=0.29765161,
+median=1.02297786,
+upper quartile=4.46280386,
+upper whisker=7072.66987192062,
+draw position=14.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(14.7,0.07302506)
+(14.7,51.03881306)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.002083766788734,
+lower quartile=0.36012895,
+median=1.54348991,
+upper quartile=7.6848303,
+upper whisker=195.56211419254842,
+draw position=16.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(16.5,0.06784227)
+(16.5,37.44980863)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001334131113254,
+lower quartile=0.25381434,
+median=0.90420711,
+upper quartile=4.24472284,
+upper whisker=7368.0,
+draw position=18.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(18.9,0.04798682)
+(18.9,28.67380867)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.007521062925627,
+lower quartile=0.28343398,
+median=0.87516486,
+upper quartile=3.91829573,
+upper whisker=7367.999981808282,
+draw position=20.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(20.7,0.05530583)
+(20.7,37.12778447)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.001334131100498,
+lower quartile=0.20512144,
+median=0.9609033,
+upper quartile=4.3942684,
+upper whisker=100.55567542883907,
+draw position=22.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(22.5,0.03918078)
+(22.5,21.6237383)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.002031468786299,
+lower quartile=0.2451218,
+median=0.85467964,
+upper quartile=3.9852922,
+upper whisker=7398.89990234375,
+draw position=24.9
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(24.9,0.04808405)
+(24.9,27.44399967)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.006295329224464,
+lower quartile=0.26272332,
+median=0.78409808,
+upper quartile=3.65166664,
+upper whisker=7398.899845281628,
+draw position=26.7
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(26.7,0.05561896)
+(26.7,33.23039311)
+};
+\addplot [ fill=NNGP,
+boxplot prepared={
+lower whisker=0.00203146870254,
+lower quartile=0.21124189,
+median=0.94356812,
+upper quartile=4.34853991,
+upper whisker=101.36092145203328,
+draw position=28.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nngp95, mark size=1.5pt]
+coordinates{
+(28.5,0.04233887)
+(28.5,20.01331074)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.011436919681728,
+lower quartile=0.35617161,
+median=0.98424077,
+upper quartile=3.29199243,
+upper whisker=8741.80078125,
+draw position=1.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(1.5,0.08167838)
+(1.5,20.32381134)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.012196915352964,
+lower quartile=0.40954918,
+median=0.96768285,
+upper quartile=2.79753768,
+upper whisker=8741.80034965993,
+draw position=3.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(3.3,0.10516839)
+(3.3,21.16721674)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.011436919726391,
+lower quartile=0.27554607,
+median=1.01207692,
+upper quartile=3.83215545,
+upper whisker=212.94025607372606,
+draw position=5.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(5.1,0.05981372)
+(5.1,18.72938041)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001552121364512,
+lower quartile=0.24389751,
+median=0.89480156,
+upper quartile=4.14761496,
+upper whisker=5176.32080078125,
+draw position=7.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(7.5,0.05173453)
+(7.5,33.6829567)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.00936220178753,
+lower quartile=0.25430513,
+median=0.85721219,
+upper quartile=3.69407678,
+upper whisker=5176.320868643968,
+draw position=9.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(9.3,0.0627247)
+(9.3,39.89018597)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001552121306202,
+lower quartile=0.23867485,
+median=1.01754188,
+upper quartile=4.72263778,
+upper whisker=167.98038521499652,
+draw position=11.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(11.1,0.04146623)
+(11.1,24.09870324)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.00602227402851,
+lower quartile=0.35101151,
+median=1.18986368,
+upper quartile=5.02372456,
+upper whisker=8665.859375,
+draw position=13.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(13.5,0.08085153)
+(13.5,37.95734253)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.01495212010996,
+lower quartile=0.3474677,
+median=1.00450583,
+upper quartile=4.25771478,
+upper whisker=8665.859714867278,
+draw position=15.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(15.3,0.08835104)
+(15.3,42.8239952)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.006022274218,
+lower quartile=0.35850065,
+median=1.52349451,
+upper quartile=6.32594093,
+upper whisker=184.215594876817,
+draw position=17.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(17.1,0.07530654)
+(17.1,32.53486873)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001347999321297,
+lower quartile=0.24491538,
+median=0.8676526,
+upper quartile=4.06139469,
+upper whisker=6527.39111328125,
+draw position=19.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(19.5,0.04652956)
+(19.5,29.06792717)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.007364773698086,
+lower quartile=0.25849072,
+median=0.8235057,
+upper quartile=3.75835891,
+upper whisker=6527.3912532134245,
+draw position=21.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(21.3,0.05491539)
+(21.3,35.42139074)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.001347999277439,
+lower quartile=0.2103101,
+median=0.90712798,
+upper quartile=4.53443405,
+upper whisker=114.00361879544378,
+draw position=23.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(23.1,0.04199838)
+(23.1,22.23556668)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.005316669121385,
+lower quartile=0.31901602,
+median=0.93293774,
+upper quartile=3.19354427,
+upper whisker=8614.091796875,
+draw position=25.5
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(25.5,0.06983234)
+(25.5,21.40143642)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.0053166690789,
+lower quartile=0.38286261,
+median=0.93038563,
+upper quartile=2.93264456,
+upper whisker=8614.092275769946,
+draw position=27.3
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(27.3,0.08939006)
+(27.3,23.23295291)
+};
+\addplot [ fill=NN,
+boxplot prepared={
+lower whisker=0.005591600621029,
+lower quartile=0.26380604,
+median=0.94879807,
+upper quartile=3.48159771,
+upper whisker=190.15902022531301,
+draw position=29.1
+},
+] coordinates {};
+\addplot [ only marks, mark=nn95, mark size=1.5pt]
+coordinates{
+(29.1,0.05390634)
+(29.1,19.45653369)
+};
+
+
+ 
+  %\begin{axis}[xlabel={Large Query: Small Query}]
+  \end{axis}
+\end{tikzpicture}
+
+\end{document}
